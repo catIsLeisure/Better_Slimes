@@ -21,7 +21,8 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.Style;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.storage.loot.LootTableList;
@@ -112,8 +113,8 @@ public class RegistryHandler {
 
 			for (EntityPlayer p : players) {
 				if (!k.world.isRemote)
-					p.sendMessage(new TextComponentString(
-							TextFormatting.GREEN + "The King Slime has been summoned near a random player."));
+					p.sendMessage(new TextComponentTranslation("betterslimes.king.slime.spawn")
+							.setStyle(new Style().setColor(TextFormatting.GREEN)));
 				p.playSound(SoundEvents.AMBIENT_CAVE, 2.5F, 1.0F);
 			}
 
