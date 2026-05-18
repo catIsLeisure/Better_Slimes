@@ -44,6 +44,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class RegistryHandler {
 
 	boolean spawning = false;
+private boolean kingSpawnedToday = false;
 
 	public static void initRegistries() {
 
@@ -79,6 +80,9 @@ public class RegistryHandler {
 		if (event.world.getTotalWorldTime() > 24000) {
 			int day = (int) (event.world.getWorldTime() % 12000);
 			if (day == 0) {
+				if (kingSpawnedToday) {
+					return;
+				}
 				if (event.side.isServer()) {
 					List<EntityPlayer> e = event.world.playerEntities;
 					
@@ -88,6 +92,7 @@ public class RegistryHandler {
 
 						int chance = rand.nextInt(101);
 						if (chance <= ConfigHandler.kingChance) {
+							kingSpawnedToday = true;
 							System.out.println("Spawning King Slime...");
 							KingSlime king = new KingSlime(p.getEntityWorld());
 							king.setLocationAndAngles(p.posX - 150 + rand.nextInt(300), p.posY + 5,
@@ -97,6 +102,9 @@ public class RegistryHandler {
 						}
 					}
 				}
+			}
+			else if (day > 100) {
+				kingSpawnedToday = false;
 			}
 		}
 
